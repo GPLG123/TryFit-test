@@ -1,0 +1,122 @@
+// script.js - Comun pentru toate paginile TryFit test
+
+// Avatar 3D (doar pe index.html)
+if (document.getElementById("avatar")) {
+    // Scene, camera, renderer
+    let scene = new THREE.Scene();
+    let camera = new THREE.PerspectiveCamera(75, 1, 0.1, 1000);
+    let renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("avatar"), alpha: true });
+    renderer.setSize(500, 500);
+
+    // Light
+    let light = new THREE.HemisphereLight(0xffffff, 0x444444, 1.5);
+    scene.add(light);
+
+    camera.position.set(0, 1.5, 3);
+
+    let avatar;
+    const loader = new THREE.GLTFLoader();
+
+    // Încarcă avatarul tău avatar.glb
+    loader.load(
+        "avatar.glb",
+        function (gltf) {
+            avatar = gltf.scene;
+            avatar.scale.set(1, 1, 1);
+            avatar.position.y = -0.5;
+            scene.add(avatar);
+            console.log("Avatar loaded!");
+        },
+        undefined,
+        function (error) { console.error("Error loading avatar.glb:", error); }
+    );
+
+    // Cub demo haine
+    let clothesGeometry = new THREE.BoxGeometry(1.2, 1.3, 0.7);
+    let clothesMaterial = new THREE.MeshStandardMaterial({ color: 0x3366ff });
+    let clothes = new THREE.Mesh(clothesGeometry, clothesMaterial);
+    clothes.position.y = 1.0;
+    scene.add(clothes);
+
+    // Animate
+    function animate() {
+        requestAnimationFrame(animate);
+        if (avatar) avatar.rotation.y += 0.01;
+        clothes.rotation.y += 0.01;
+        renderer.render(scene, camera);
+    }
+    animate();
+
+    // Update avatar după măsuri
+    window.updateAvatar = function () {
+        let chest = parseFloat(document.getElementById("chest").value) || 0;
+        let waist = parseFloat(document.getElementById("waist").value) || 0;
+        let hips = parseFloat(document.getElementById("hips").value) || 0;
+        let size = document.getElementById("size").value;
+
+        if (avatar) {
+            let scaleX = 1 + chest / 200;
+            let scaleY = 1 + waist / 300;
+            let scaleZ = 1 + hips / 200;
+            avatar.scale.set(scaleX, scaleY, scaleZ);
+        }
+
+        if (size === "S") clothes.scale.set(0.9, 0.9, 0.9);
+        if (size === "M") clothes.scale.set(1, 1, 1);
+        if (size === "L") clothes.scale.set(1.15, 1.15, 1.15);
+
+        document.getElementById("result").innerText = "Avatar updated for size: " + size;
+    };
+
+    // Schimbare culoare haine (opțional)
+    window.wearClothes = function (color) {
+        clothes.material.color.set(color);
+    };
+}
+
+// Funcții produse
+window.searchProducts = function () {
+    let q = document.getElementById("search")?.value.toLowerCase() || "";
+    document.querySelectorAll('.product').forEach(p => {
+        let name = p.querySelector('p').innerText.toLowerCase();
+        p.style.display = name.includes(q) ? 'block' : 'none';
+    });
+};
+
+// Cart
+window.addToCart = function (name, price) {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push({ name, price });
+    localStorage.setItem('cart', JSON.stringify(cart));
+    alert(name + " added to cart!");
+    loadCart();
+};
+
+window.loadCart = function () {
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    let cartList = document.getElementById('cartList');
+    if (!cartList) return;
+    cartList.innerHTML = '';
+    let total = 0;
+    cart.forEach(item => {
+        let li = document.createElement('li');
+        li.innerText = item.name + " - £" + item.price;
+        cartList.appendChild(li);
+        total += item.price;
+    });
+    let totalPrice = document.getElementById('totalPrice');
+    if (totalPrice) totalPrice.innerText = "Total: £" + total;
+};
+
+window.goCheckout = function () {
+    window.location.href = "checkout.html";
+};
+
+window.finishOrder = function () {
+    localStorage.removeItem('cart');
+    alert("Order finished! Cart cleared.");
+    window.location.href = "index.html";
+};
+
+// Load cart la deschidere pagină
+window.addEventListener('load', loadCart);
