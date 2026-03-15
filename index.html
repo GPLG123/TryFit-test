@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TryFit - Virtual Fitting</title>
+<link rel="stylesheet" href="style.css">
+
+<!-- Three.js -->
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.158.0/examples/js/loaders/GLTFLoader.js"></script>
+
+<!-- Script-ul principal -->
+<script src="script.js" defer></script>
+</head>
+<body>
+
+<header>
+    <h1>TryFit Virtual Fitting</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="products.html">Products</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
+    </nav>
+</header>
+
+<main>
+    <section class="avatar-section">
+        <div class="controls card">
+            <h2>Your Body Measurements</h2>
+            <label>Chest (cm)<input id="chest" type="number" placeholder="e.g. 90"></label>
+            <label>Waist (cm)<input id="waist" type="number" placeholder="e.g. 70"></label>
+            <label>Hips (cm)<input id="hips" type="number" placeholder="e.g. 95"></label>
+            <label>Size
+                <select id="size">
+                    <option>S</option>
+                    <option>M</option>
+                    <option>L</option>
+                </select>
+            </label>
+            <button onclick="updateAvatar()">Update Avatar</button>
+            <div id="result"></div>
+        </div>
+        <div class="preview card">
+            <h2>Avatar Preview</h2>
+            <canvas id="avatar" width="500" height="500"></canvas>
+        </div>
+    </section>
+</main>
+
+<footer>
+    © 2026 TryFit | All Rights Reserved
+</footer>
+
+</body>
+</html>
