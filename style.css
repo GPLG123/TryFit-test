@@ -1,0 +1,103 @@
+/* style.css - Stil modern TryFit */
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f0f2f5;
+    color: #333;
+}
+
+header {
+    background: linear-gradient(90deg, #4e54c8, #8f94fb);
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2em;
+}
+
+nav {
+    margin-top: 10px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+nav a:hover {
+    color: #fffa;
+    text-decoration: underline;
+}
+
+main {
+    padding: 40px 20px;
+}
+
+.avatar-section {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+}
+
+.controls label {
+    display: block;
+    margin: 10px 0;
+    font-weight: bold;
+}
+
+input, select {
+    padding: 8px;
+    width: 200px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+button {
+    padding: 10px 25px;
+    margin-top: 10px;
+    background: #4e54c8;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: #8f94fb;
+}
+
+canvas {
+    border-radius: 15px;
+    border: 1px solid #ccc;
+    display: block;
+    margin: 0 auto;
+}
+
+#result {
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+footer {
+    text-align: center;
+    padding: 15px;
+    background: #222;
+    color: white;
+    margin-top: 30px;
+}
